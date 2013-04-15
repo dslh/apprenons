@@ -1,0 +1,59 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/phrase_options_theme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_margin"
+    tools:context=".VerbOptionsFragment" >
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/verb_options" />
+
+    <CheckBox
+        android:id="@+id/checkIrregular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textTitle"
+        android:text="@string/irregular" />
+
+    <CheckBox
+        android:id="@+id/checkPronominal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/checkIrregular"
+        android:text="@string/pronominal" />
+    
+    <RadioGroup
+        android:id="@+id/verbTransitivityGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/checkPronominal" >
+
+        <RadioButton
+            android:id="@+id/radioTransitive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_transitive" />
+
+        <RadioButton
+            android:id="@+id/radioIntransitive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_intransitive" />
+
+        <RadioButton
+            android:id="@+id/radioEither"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radio_either" />
+    </RadioGroup>
+
+</RelativeLayout>

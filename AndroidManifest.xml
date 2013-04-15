@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="nz.co.lakehammond.apprenons"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="12"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="nz.co.lakehammond.apprenons.TraductionDetailActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan"
+            android:parentActivityName="nz.co.lakehammond.apprenons.TranslationsListActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="nz.co.lakehammond.apprenons.TranslationsListActivity" />
+        </activity>
+        <activity
+            android:name="nz.co.lakehammond.apprenons.TranslationsListActivity"
+            android:label="@string/title_activity_translations_list" />
+    </application>
+
+</manifest>

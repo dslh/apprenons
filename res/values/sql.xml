@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="sql_create_phrase_types">
+        CREATE TABLE phrase_types (
+        	type TEXT NOT NULL PRIMARY KEY
+        )
+    </string>
+    <string name="sql_populate_phrase_types">
+        INSERT INTO phrase_types
+        VALUES (\'Noun\'), (\'Verb\'), (\'Adjective\'), (\'Adverb\')
+    </string>	<string name="sql_create_phrase">
+        CREATE TABLE phrase (
+        	id INTEGER PRIMARY KEY,
+        	phrase TEXT NOT NULL,
+        	translation TEXT NOT NULL,
+			type TEXT REFERENCES phrase_type(type)
+        )
+    </string>
+    <string name="sql_create_noun_gender">
+        CREATE TABLE noun_gender (
+        	gender TEXT NOT NULL
+        )
+    </string>
+    <string name="sql_populate_noun_gender">
+        INSERT INTO noun_gender
+        	VALUES (\'Masculine\'), (\'Feminine\')
+    </string>
+    <string name="sql_create_noun_details">
+        CREATE TABLE noun_details (
+        	phrase_id INTEGER NOT NULL PRIMARY KEY REFERENCES phrases(id),
+        	proper INTEGER NOT NULL DEFAULT 0,
+        	plural INTEGER NOT NULL DEFAULT 0,
+        	gender TEXT REFERENCES noun_gender(gender)
+        )
+    </string>
+    <string name="sql_create_adjective_details">
+        CREATE TABLE adjective_details (
+        	phrase_id INTEGER NOT NULL PRIMARY KEY REFERENCES phrases(id),
+        	feminine_form TEXT DEFAULT NULL,
+        	plural_form TEXT DEFAULT NULL,
+        	feminine_plural_form TEXT DEFAULT NULL
+        )
+    </string>
+    <string name="sql_create_verb_family">
+        CREATE TABLE verb_family (
+        	family TEXT NOT NULL PRIMARY KEY
+        )
+    </string>
+    <string name="sql_populate_verb_family">
+        INSERT INTO verb_family
+        VALUES (\'First\'), (\'Second\'), (\'Third\'), (\'Irregular\')
+    </string>
+    <string name="sql_create_verb_transitivity">
+        CREATE TABLE verb_transitivity (
+        	transitivity TEXT NOT NULL PRIMARY KEY
+        )
+    </string>
+    <string name="sql_populate_verb_transitivity">
+        INSERT INTO verb_transitivity 
+        VALUES (\'Transitive\'), (\'Intransitive\'), (\'Both\')
+    </string>
+    <string name="sql_create_verb_details">
+        CREATE TABLE verb_details (
+        	phrase_id NOT NULL PRIMARY KEY REFERENCES phrase(id),
+        	reflexive INTEGER NOT NULL DEFAULT 0,
+        	family TEXT NOT NULL REFERENCES verb_family(family),
+        	transitivity TEXT REFERENCES verb_transitivity(transitivity) 
+        )
+    </string>
+    <string name="sql_create_tag">
+        CREATE TABLE tag (
+        	id INTEGER PRIMARY KEY,
+        	tag TEXT NOT NULL UNIQUE COLLATE NOCASE
+        )
+    </string>
+    <string name="sql_create_phrase_tag">
+        CREATE TABLE phrase_tag (
+        	phrase_id INTEGER NOT NULL REFERENCES phrase(id),
+        	tag_id INTEGER NOT NULL REFERENCES tag(id),
+        	UNIQUE (phrase_id,tag_id)
+        )
+    </string>
+    
+    <string name="sql_snippet_phrase_id_matches_tag">
+        id IN (
+        	SELECT phrase_id
+        	  FROM phrase_tag
+        	  JOIN tag
+        		ON tag_id = tag.id
+        	 WHERE tag = \'?\'
+        )
+    </string>
+</resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Apprenons Français</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- NEW PHRASE FORM -->
+    <string name="done_button">Add</string>
+    <!-- text box hints -->
+    <string name="new_phrase_hint">French word or phrase</string>
+    <string name="translation_hint">Translations (separated by ,)</string>
+    <string name="translation_not_saved">There was a problem saving the translation.</string>
+    <string name="phrase_not_given">You must enter a french word or phrase.</string>
+    <string name="translation_not_given">You must enter one or more translations, separated by commas.</string>
+    <!-- phrase type -->
+    <string name="radio_noun">Noun</string>
+    <string name="radio_verb">Verb</string>
+    <string name="radio_adjective">Adjective</string>
+    <string name="radio_adverb">Adverb</string>
+    <!-- noun options -->
+    <string name="noun_options">Noun options</string>
+    <string name="masculine">Masculine</string>
+    <string name="feminine">Feminine</string>
+    <string name="proper">Proper noun</string>
+    <string name="pluriel">Plural</string>
+    <!-- verb options -->
+    <string name="verb_options">Verb options</string>
+    <string name="radio_transitive">Transitive</string>
+    <string name="radio_intransitive">Intransitive</string>
+    <string name="radio_either">Both</string>
+    <string name="pronominal">Reflexive</string>
+    <string name="irregular">Irregular</string>
+    <!-- adjective options -->
+    <string name="adjective_options">Adjective Options</string>
+    <string name="feminine_hint">Feminine form</string>
+    <string name="plural_hint">Plural form</string>
+    <string name="feminine_plural_hint">Feminine plural</string>
+    <!-- tags list -->
+    <string name="tags_title">Tags:</string>
+    <string name="new_tag_hint">Add a new tag&#8230;</string>
+    <string name="tag_not_saved">There was a problem saving the tag.</string>
+    <string name="tag_confirm_delete_title">Delete Tag</string>
+    <string name="tag_confirm_delete_message">"Are you sure you want to delete the tag '%s'?"</string>
+    <string name="tag_confirm_delete_ok">Delete it</string>
+    <string name="tag_confirm_delete_cancel">Never mind</string>
+    <string name="title_activity_translations_list">Translations List</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="add_translation">Add new translations...</string>
+
+</resources>

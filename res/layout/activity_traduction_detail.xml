@@ -1,0 +1,140 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/thin_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".TraductionDetailActivity" >
+
+    <EditText
+        android:id="@+id/newPhraseText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/doneButton"
+        android:ems="10"
+        android:hint="@string/new_phrase_hint"
+        android:imeOptions="actionNext"
+        android:nextFocusDown="@+id/newTranslationText"
+        android:nextFocusForward="@+id/newTranslationText"
+        android:singleLine="true" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/newTranslationText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/newPhraseText"
+        android:ems="10"
+        android:hint="@string/translation_hint"
+        android:imeOptions="actionDone"
+        android:singleLine="true" />
+
+    <RelativeLayout
+        android:id="@+id/classificationLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/newTranslationText" >
+
+        <RadioGroup
+            android:id="@+id/phraseTypeGroup"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/newTranslationText"
+            android:layout_below="@+id/newTranslationText" >
+
+            <RadioButton
+                android:id="@+id/radioNoun"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:onClick="onPhraseTypeSelected"
+                android:text="@string/radio_noun" />
+
+            <RadioButton
+                android:id="@+id/radioVerb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onPhraseTypeSelected"
+                android:text="@string/radio_verb" />
+
+            <RadioButton
+                android:id="@+id/radioAdjective"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onPhraseTypeSelected"
+                android:text="@string/radio_adjective" />
+
+            <RadioButton
+                android:id="@+id/radioAdverb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="onPhraseTypeSelected"
+                android:text="@string/radio_adverb" />
+        </RadioGroup>
+
+        <fragment
+            android:id="@+id/typeOptionsFragment"
+            android:name="android.app.ListFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/phraseTypeGroup"
+            android:layout_toRightOf="@+id/phraseTypeGroup"
+            tools:layout="@layout/noun_options_fragment" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tagsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/classificationLayout"
+        android:text="@string/tags_title"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ScrollView
+        android:id="@+id/scrollTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/classificationLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/newTranslationText"
+        android:layout_below="@id/tagsTitle" >
+
+        <LinearLayout
+            android:id="@+id/tagList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+	
+	        <EditText
+	            android:id="@+id/newTag"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:ems="10"
+	            android:hint="@string/new_tag_hint"
+	            android:imeOptions="actionDone"
+	            android:singleLine="true" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/doneButton"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/newTranslationText"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:onClick="saveTraduction"
+        android:text="@string/done_button" />
+
+</RelativeLayout>

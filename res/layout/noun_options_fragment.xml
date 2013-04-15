@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/phrase_options_theme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_margin" >
+
+    <TextView
+        android:id="@+id/nounOptionsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/noun_options"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <RadioGroup
+        android:id="@+id/nounGenderGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkProper"
+        android:layout_below="@id/nounOptionsTitle" >
+
+        <RadioButton
+            android:id="@+id/radioMasculine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/masculine" />
+
+        <RadioButton
+            android:id="@+id/radioFeminine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feminine" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/checkPlural"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/nounGenderGroup"
+        android:text="@string/pluriel" />
+
+    <CheckBox
+        android:id="@+id/checkProper"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/checkPlural"
+        android:text="@string/proper" />
+
+</RelativeLayout>

@@ -1,0 +1,47 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/phrase_options_theme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/default_margin"
+    tools:context=".AdjectiveOptionsFragment" >
+
+    <TextView
+        android:id="@+id/textTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/adjective_options" />
+
+    <EditText
+        android:id="@+id/editFeminine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textTitle"
+        android:ems="10"
+        android:hint="@string/feminine_hint" >
+
+        <requestFocus />
+    </EditText>
+
+    <EditText
+        android:id="@+id/editPlural"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editFeminine"
+        android:layout_below="@+id/editFeminine"
+        android:ems="10"
+        android:hint="@string/plural_hint" />
+
+    <EditText
+        android:id="@+id/editFemininePlural"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editPlural"
+        android:layout_below="@+id/editPlural"
+        android:ems="10"
+        android:hint="@string/feminine_plural_hint" />
+
+</RelativeLayout>
