@@ -1,0 +1,101 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".NewQuizActivity" >
+
+    <TextView
+        android:id="@+id/textQuestionCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/seekQuestionCount"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/buttonStartQuiz"
+        android:gravity="center_vertical"
+        android:text="@string/text_question_count"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <SeekBar
+        android:id="@+id/seekQuestionCount"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonStartQuiz"
+        android:layout_toLeftOf="@+id/textShowQuestionCount"
+        android:layout_toRightOf="@+id/textQuestionCount"
+        android:max="4"
+        android:progress="2" />
+
+    <TextView
+        android:id="@+id/textShowQuestionCount"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/seekQuestionCount"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/seekQuestionCount"
+        android:layout_below="@id/textQuestionCount"
+        android:contentDescription="@string/show_question_count"
+        android:gravity="right|center_vertical"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textIsSelectable="false" />
+    
+    <TextView
+        android:id="@+id/textChooseTags"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/seekQuestionCount"
+        android:layout_toLeftOf="@+id/checkAllTopics"
+        android:text="@string/choose_tags"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <Button
+        android:id="@+id/buttonAddWords"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="@string/add_translation" />
+
+    <Button
+        android:id="@+id/buttonStartQuiz"
+        style="android:buttonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/start_quiz" />
+
+    <ScrollView
+        android:id="@+id/scrollQuizTags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonAddWords"
+        android:layout_alignLeft="@+id/textChooseTags"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/textChooseTags" >
+
+        <LinearLayout
+            android:id="@+id/quizTagList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+        </LinearLayout>
+    </ScrollView>
+
+    <CheckBox
+        android:id="@+id/checkAllTopics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textChooseTags"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/seekQuestionCount"
+        android:text="@string/all_topics" />
+
+</RelativeLayout>

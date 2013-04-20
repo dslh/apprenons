@@ -43,8 +43,23 @@
     <string name="tag_confirm_delete_message">"Are you sure you want to delete the tag '%s'?"</string>
     <string name="tag_confirm_delete_ok">Delete it</string>
     <string name="tag_confirm_delete_cancel">Never mind</string>
+
+    <!-- Translation list -->
     <string name="title_activity_translations_list">Translations List</string>
+    <string name="add_translation">Add new translations&#8230;</string>
+
+    <!-- New quiz -->
+    <string name="choose_tags">Quiz topic(s):</string>
+    <string name="text_question_count">Questions:</string>
+    <string name="show_question_count">The number of questions that will be asked</string>
+    <string name="start_quiz">Start quiz!</string>
+    <string name="new_quiz">New Quiz</string>
+    <string name="all_topics">Everything</string>
+    <string name="title_activity_quiz">Quiz</string>
     <string name="hello_world">Hello world!</string>
-    <string name="add_translation">Add new translations...</string>
+    <string name="quiz_progress">How far through the quiz you are</string>
+    <string name="text_answer_english">In English</string>
+    <string name="text_answer_french">In French</string>
+    <string name="hint_correct_answer">This is the correct answer</string>
 
 </resources>
