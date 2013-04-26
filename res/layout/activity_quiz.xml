@@ -31,11 +31,11 @@
 
     <TextView
         android:id="@+id/textQuestion"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/textQuizProgress"
+        android:layout_toRightOf="@+id/imageQuestionLanguage"
         android:gravity="center"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textIsSelectable="true" />
@@ -63,5 +63,20 @@
         android:contentDescription="@string/hint_correct_answer"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textIsSelectable="true" />
+
+    <ImageView
+        android:id="@+id/imageQuestionLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/textQuizProgress"
+        android:src="@drawable/fr_flag" />
+
+    <ImageView
+        android:id="@+id/imageAnswerLanguage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/uk_flag" />
 
 </RelativeLayout>

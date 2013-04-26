@@ -61,5 +61,10 @@
     <string name="text_answer_english">In English</string>
     <string name="text_answer_french">In French</string>
     <string name="hint_correct_answer">This is the correct answer</string>
+    <string name="answer_in_french">The answer should be given in French</string>
+    <string name="answer_in_english">The answer should be given in English</string>
+    <string name="question_in_engish">The question is in English</string>
+    <string name="question_in_french">The question is in French</string>
+    <string name="answer_question">Go!</string>
 
 </resources>
