@@ -60,6 +60,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:onClick="onAddWords"
         android:text="@string/add_translation" />
 
     <Button
@@ -70,6 +71,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:onClick="onStartQuiz"
         android:text="@string/start_quiz" />
 
     <ScrollView

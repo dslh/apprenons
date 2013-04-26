@@ -7,7 +7,9 @@ import java.util.List;
 import nz.co.lakehammond.apprenons.sql.TraductionDatabase;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.CheckBox;
@@ -17,9 +19,12 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NewQuizActivity extends Activity {
 
+	public static final String QUESTION_COUNT = "nz.co.lakehammond.apprenons.QuestionCount";
+	public static final String TAG_LIST = "nz.co.lakehammond.apprenons.TagList";
 	private TraductionDatabase db;
 	private List<CheckBox> tagBoxes = new ArrayList<CheckBox>();
 	
@@ -86,14 +91,39 @@ public class NewQuizActivity extends Activity {
 		return (LinearLayout) findViewById(R.id.quizTagList);
 	}
 	
-	private Collection<String> getCheckedTags() {
+	private boolean hasCheckedTags() {
+		for (CheckBox box : tagBoxes)
+			if (box.isChecked())
+				return true;
+		
+		return false;
+	}
+	
+	private String[] getCheckedTags() {
 		Collection<String> tags = new ArrayList<String>();
 		for (CheckBox box : tagBoxes) {
 			if (box.isChecked()) {
 				tags.add((String) box.getTag());
 			}
 		}
-		return tags;
+		return tags.toArray(new String[0]);
+	}
+	
+	public void onAddWords(View v) {
+		Intent intent = new Intent(this, TraductionDetailActivity.class);
+		intent.putExtra(TAG_LIST, getCheckedTags());
+		startActivity(intent);
+	}
+	
+	public void onStartQuiz(View v) {
+		if (hasCheckedTags()) {
+			Intent intent = new Intent(this, QuizActivity.class);
+			intent.putExtra(TAG_LIST, getCheckedTags());
+			intent.putExtra(QUESTION_COUNT, QUESTION_COUNTS[seekQuestionCount().getProgress()]);
+			startActivity(intent);
+		} else {
+			Toast.makeText(this, R.string.no_tags_checked, Toast.LENGTH_LONG).show();
+		}
 	}
 
 	@Override

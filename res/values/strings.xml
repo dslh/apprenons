@@ -56,7 +56,9 @@
     <string name="new_quiz">New Quiz</string>
     <string name="all_topics">Everything</string>
     <string name="title_activity_quiz">Quiz</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="no_tags_checked">You must select at least one tag to be tested on</string>
+
+    <!-- The quiz itself -->
     <string name="quiz_progress">How far through the quiz you are</string>
     <string name="text_answer_english">In English</string>
     <string name="text_answer_french">In French</string>
