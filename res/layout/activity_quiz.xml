@@ -94,4 +94,24 @@
         android:layout_centerHorizontal="true"
         android:text="@string/answer_question" />
 
+    <ImageButton
+        android:id="@+id/imageButtonMasculine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/buttonAnswerQuestion"
+        android:contentDescription="@string/masculine"
+        android:src="@drawable/masculine"
+        android:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/imageButtonFeminine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/buttonAnswerQuestion"
+        android:contentDescription="@string/feminine"
+        android:src="@drawable/feminine"
+        android:visibility="visible" />
+
 </RelativeLayout>
