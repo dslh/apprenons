@@ -123,6 +123,21 @@ public class Traduction {
 	public List<String> getVersionsAnglaiseList() {
 		return Collections.unmodifiableList(versionsAnglaise);
 	}
+
+	/**
+	 * Returns whether or not the given string is
+	 * among the English versions.
+	 * 
+	 * @param version the English version to be checked
+	 * @return <code>true</code> if the version is present
+	 */
+	public boolean hasVersionAnglaise(String version) {
+		for (String english : versionsAnglaise)
+			if (english.equalsIgnoreCase(version))
+				return true;
+				
+		return false;
+	}
 	
 	/**
 	 * Donne la version Française de cette traduction.

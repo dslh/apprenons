@@ -20,6 +20,7 @@ import nz.co.lakehammond.apprenons.model.Traduction;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
@@ -216,7 +217,25 @@ public class TraductionDatabase {
 		return getTraductions(
 				context.getString(R.string.sql_snippet_phrase_id_matches_tag),
 				new String[] {tag});
+	}
+	
+	/**
+	 * Get a list of all of the translations which match
+	 * any of the given tags.
+	 * 
+	 * @param tags a list of tags to get translations for
+	 * @return a list of matching translations
+	 */
+	public List<Traduction> getTraductionsByTags(Collection<String> tags) {
+		List<String> escaped = new ArrayList<String>();
+		for (String tag : tags)
+			escaped.add(DatabaseUtils.sqlEscapeString(tag));
+		String listedTags = "'" + TextUtils.join("','", escaped) + "'";
 		
+		return getTraductions(
+				context.getString(R.string.sql_snippet_phrase_id_matches_any_tag)
+					.replace("?", listedTags),
+				null);
 	}
 	
 	private List<Traduction> getTraductions(String selection,String[] selectionArgs) {

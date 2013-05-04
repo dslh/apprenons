@@ -84,17 +84,8 @@ public class TraductionDetailActivity extends Activity {
 		});
         
 		// Show the Up button in the action bar.
-		setupActionBar();
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
-	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
-    }
+	}
 
 	/* (non-Javadoc)
 	 * @see android.app.Activity#onOptionsItemSelected(android.view.MenuItem)
@@ -135,8 +126,11 @@ public class TraductionDetailActivity extends Activity {
 
 	
     private void populateTagsList() {
+    	for (String tag : getIntent().getStringArrayExtra(Extras.TAG_LIST))
+    		selectedTags.add(tag);
+    	
 		for (final String tag : db.getAllTags())
-			addTagCheckBox(tag);
+			addTagCheckBox(tag).setChecked(selectedTags.contains(tag));
 	}
 
 

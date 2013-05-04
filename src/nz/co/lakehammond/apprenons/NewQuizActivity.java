@@ -23,8 +23,6 @@ import android.widget.Toast;
 
 public class NewQuizActivity extends Activity {
 
-	public static final String QUESTION_COUNT = "nz.co.lakehammond.apprenons.QuestionCount";
-	public static final String TAG_LIST = "nz.co.lakehammond.apprenons.TagList";
 	private TraductionDatabase db;
 	private List<CheckBox> tagBoxes = new ArrayList<CheckBox>();
 	
@@ -111,15 +109,15 @@ public class NewQuizActivity extends Activity {
 	
 	public void onAddWords(View v) {
 		Intent intent = new Intent(this, TraductionDetailActivity.class);
-		intent.putExtra(TAG_LIST, getCheckedTags());
+		intent.putExtra(Extras.TAG_LIST, getCheckedTags());
 		startActivity(intent);
 	}
 	
 	public void onStartQuiz(View v) {
 		if (hasCheckedTags()) {
 			Intent intent = new Intent(this, QuizActivity.class);
-			intent.putExtra(TAG_LIST, getCheckedTags());
-			intent.putExtra(QUESTION_COUNT, QUESTION_COUNTS[seekQuestionCount().getProgress()]);
+			intent.putExtra(Extras.TAG_LIST, getCheckedTags());
+			intent.putExtra(Extras.QUESTION_COUNT, QUESTION_COUNTS[seekQuestionCount().getProgress()]);
 			startActivity(intent);
 		} else {
 			Toast.makeText(this, R.string.no_tags_checked, Toast.LENGTH_LONG).show();

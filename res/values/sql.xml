@@ -90,4 +90,13 @@
         	 WHERE tag = \'?\'
         )
     </string>
+    <string name="sql_snippet_phrase_id_matches_any_tag">
+        id IN (
+        	SELECT DISTINCT phrase_id
+        	  FROM phrase_tag
+        	  JOIN tag
+        	    ON tag_id = tag.id
+        	 WHERE tag IN (?)
+        )
+    </string>
 </resources>
