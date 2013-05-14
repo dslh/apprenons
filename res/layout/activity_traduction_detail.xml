@@ -35,6 +35,8 @@
         android:ems="10"
         android:hint="@string/translation_hint"
         android:imeOptions="actionDone"
+        android:nextFocusLeft="@id/newPhraseText"
+        android:nextFocusUp="@id/newPhraseText"
         android:singleLine="true" />
 
     <RelativeLayout

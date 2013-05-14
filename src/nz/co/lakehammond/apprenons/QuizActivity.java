@@ -12,9 +12,12 @@ import nz.co.lakehammond.apprenons.model.question.ShufflingQuestionQueue;
 import nz.co.lakehammond.apprenons.sql.TraductionDatabase;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.res.ColorStateList;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -27,8 +30,30 @@ public class QuizActivity extends Activity {
 	private List<Traduction> translations;
 	private int questionCount;
 	private int questionIndex = 0;
+	private int correctCount = 0;
 	private QuestionQueue questions;
 	private Question question;
+
+	OnClickListener answerQuestionWhenClicked = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			answerQuestion(editAnswer().getText().toString());
+		}
+	};
+	OnClickListener showNextQuestionWhenClicked = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			showNextQuestion();
+		}
+	};
+	OnClickListener returnToParentWhenClicked = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			NavUtils.navigateUpFromSameTask(QuizActivity.this);
+		}
+	};
+	
+	private ColorStateList initialAnswerColors;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,35 +74,129 @@ public class QuizActivity extends Activity {
 		progressBar().setMax(questionCount);
 		
 		questions = new ShufflingQuestionQueue(translations, new FrenchAndEnglishQuestionFactory(translations));
+
+		
+		EditText editAnswer = editAnswer();
+		initialAnswerColors = editAnswer.getTextColors();
 		
 		showNextQuestion();
+		
+		editAnswer.setOnEditorActionListener(new OnDoneEditingListener() {
+			@Override
+			protected void onDone(TextView v) {
+				if (question.isAnswered())
+					showNextQuestion();
+				else
+					answerQuestion(v.getText().toString());
+			}
+		});
 	}
 
 	private void showNextQuestion() {
+		if (questionIndex == questionCount) {
+			showQuizResult();
+			return;
+		}
+		
 		question = questions.nextQuestion();
 		
-		TextView textCorrectAnswer = (TextView) findViewById(R.id.textCorrectAnswer);
-		textCorrectAnswer.setText(question.getAnswerText());
-		textCorrectAnswer.setVisibility(View.INVISIBLE);
-		EditText editAnswer = (EditText) findViewById(R.id.editAnswer);
-		editAnswer.setText(null);
+		resetStyle();
 		
 		TextView textQuestion = (TextView) findViewById(R.id.textQuestion);
 		textQuestion.setText(question.getQuestionText());
+		
 		ImageView questionLanguage = (ImageView) findViewById(R.id.imageQuestionLanguage);
 		ImageView answerLanguage = (ImageView) findViewById(R.id.imageAnswerLanguage);
 		if (question.getQuestionLanguage() == Language.ENGLISH) {
 			questionLanguage.setImageResource(R.drawable.uk_flag);
 			answerLanguage.setImageResource(R.drawable.fr_flag);
+			editAnswer().setHint(R.string.text_answer_french);
 		} else {
 			questionLanguage.setImageResource(R.drawable.fr_flag);
-			questionLanguage.setImageResource(R.drawable.uk_flag);
+			answerLanguage.setImageResource(R.drawable.uk_flag);
+			editAnswer().setHint(R.string.text_answer_english);
 		}
+		
 		showCurrentProgress();
+		
+		Button answerQuestion = answerQuestionButton();
+		answerQuestion.setText(getString(R.string.answer_question));
+		answerQuestion.setOnClickListener(answerQuestionWhenClicked);
+	}
+
+	private void resetStyle() {
+		TextView textCorrectAnswer = textCorrectAnswer();
+		textCorrectAnswer.setText(question.getAnswerText());
+		textCorrectAnswer.setVisibility(View.INVISIBLE);
+
+		EditText editAnswer = editAnswer();	
+		editAnswer.setText(null);
+		editAnswer.setEnabled(true);
+		editAnswer.setTextColor(initialAnswerColors);
+		
+		findViewById(R.id.imageStrikeThrough).setVisibility(View.INVISIBLE);;
+	}
+	
+	private void answerQuestion(String answer) {
+		if (question.isAnswered())
+			return;
+		
+		questionIndex++;
+		EditText editAnswer = editAnswer();
+		editAnswer.setEnabled(false);
+		TextView correctAnswer = textCorrectAnswer();
+		
+		if (question.answerQuestion(answer)) {
+			correctCount++;
+			editAnswer.setTextColor(getResources().getColor(R.color.correct_answer));
+			
+			correctAnswer.setTextColor(getResources().getColor(R.color.correct_answer));
+			correctAnswer.setText(R.string.correct_answer_given);
+		} else {
+			editAnswer.setTextColor(getResources().getColor(R.color.incorrect_answer));
+			correctAnswer.setTextColor(getResources().getColor(R.color.incorrect_answer));
+			findViewById(R.id.imageStrikeThrough).setVisibility(View.VISIBLE);
+		}
+		
+		correctAnswer.setVisibility(View.VISIBLE);
+		
+		Button answerQuestion = answerQuestionButton();
+		answerQuestion.setText(getString(R.string.next_question));
+		answerQuestion.setOnClickListener(showNextQuestionWhenClicked);
+	}
+	
+	private void showQuizResult() {
+		resetStyle();
+		progressBar().setProgress(questionCount);
+
+		TextView correctAnswer = textCorrectAnswer();
+		correctAnswer.setVisibility(View.VISIBLE);
+		correctAnswer.setTextColor(getResources().getColor(R.color.correct_answer));
+		correctAnswer.setText(getString(R.string.quiz_final_score, correctCount, questionCount));
+		
+		EditText editAnswer = editAnswer();
+		editAnswer.setText(null);
+		editAnswer.setEnabled(false);
+		
+		Button button = answerQuestionButton();
+		button.setText(getString(R.string.exit_quiz));
+		button.setOnClickListener(returnToParentWhenClicked);
+	}
+
+	private Button answerQuestionButton() {
+		return (Button) findViewById(R.id.buttonAnswerQuestion);
+	}
+
+	private TextView textCorrectAnswer() {
+		return (TextView) findViewById(R.id.textCorrectAnswer);
+	}
+
+	private EditText editAnswer() {
+		return (EditText) findViewById(R.id.editAnswer);
 	}
 
 	private void showCurrentProgress() {
-		TextView textQuestionCount = (TextView) findViewById(R.id.textQuestionCount);
+		TextView textQuestionCount = (TextView) findViewById(R.id.textQuizProgress);
 		textQuestionCount.setText((questionIndex + 1) + " / " + questionCount);
 		progressBar().setProgress(questionIndex);
 	}

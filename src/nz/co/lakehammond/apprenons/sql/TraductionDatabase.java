@@ -230,7 +230,7 @@ public class TraductionDatabase {
 		List<String> escaped = new ArrayList<String>();
 		for (String tag : tags)
 			escaped.add(DatabaseUtils.sqlEscapeString(tag));
-		String listedTags = "'" + TextUtils.join("','", escaped) + "'";
+		String listedTags = TextUtils.join(",", escaped);
 		
 		return getTraductions(
 				context.getString(R.string.sql_snippet_phrase_id_matches_any_tag)

@@ -18,13 +18,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup.LayoutParams;
-import android.view.inputmethod.EditorInfo;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -32,7 +30,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 public class TraductionDetailActivity extends Activity {
@@ -54,32 +51,17 @@ public class TraductionDetailActivity extends Activity {
         populateTagsList();
         
         EditText newTagBox = (EditText) findViewById(R.id.newTag);
-        newTagBox.setOnEditorActionListener(new OnEditorActionListener() {
+        newTagBox.setOnEditorActionListener(new OnDoneEditingListener() {
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_DONE ||
-					(event.getAction() == KeyEvent.ACTION_DOWN
-					 && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-					
-					saveTag(v);
-					return true;
-				}
-				
-				return false;
+			protected void onDone(TextView v) {
+				saveTag(v);
 			}
 		});
-        
-        newTranslationBox().setOnEditorActionListener(new OnEditorActionListener() {
+        newTranslationBox().setOnEditorActionListener(new OnDoneEditingListener() {
+			
 			@Override
-			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-				if (actionId == EditorInfo.IME_ACTION_DONE ||
-					(event.getAction() == KeyEvent.ACTION_DOWN
-					 && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
-					
-					saveTraduction(v);
-					return true;
-				}
-				return false;
+			protected void onDone(TextView v) {
+				saveTraduction(v);
 			}
 		});
         
@@ -93,7 +75,7 @@ public class TraductionDetailActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (item.getItemId() == android.R.id.home) {
-			Intent intent = new Intent(this, TranslationsListActivity.class);
+			Intent intent = new Intent(this, NewQuizActivity.class);
 			startActivity(intent);
 			
 			return true;
@@ -126,8 +108,10 @@ public class TraductionDetailActivity extends Activity {
 
 	
     private void populateTagsList() {
-    	for (String tag : getIntent().getStringArrayExtra(Extras.TAG_LIST))
-    		selectedTags.add(tag);
+    	String[] tagList = getIntent().getStringArrayExtra(Extras.TAG_LIST);
+    	if (tagList != null)
+    		for (String tag : tagList)
+    			selectedTags.add(tag);
     	
 		for (final String tag : db.getAllTags())
 			addTagCheckBox(tag).setChecked(selectedTags.contains(tag));

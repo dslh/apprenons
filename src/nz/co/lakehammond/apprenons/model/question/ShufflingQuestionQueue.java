@@ -29,8 +29,9 @@ public class ShufflingQuestionQueue implements QuestionQueue {
 						question.getTranslation());
 			else
 				translations.add(
-						translations.size() - 3
-						- (int) (translations.size() * 0.05),
+						Math.min(0,
+								translations.size() - 3
+								- (int) (translations.size() * 0.05)),
 						question.getTranslation());
 			
 			question = null;

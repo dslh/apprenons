@@ -60,6 +60,7 @@
 
     <!-- The quiz itself -->
     <string name="quiz_progress">How far through the quiz you are</string>
+    <string name="quiz_final_score">You got %1$d out of %2$d correct.</string>
     <string name="text_answer_english">In English</string>
     <string name="text_answer_french">In French</string>
     <string name="hint_correct_answer">This is the correct answer</string>
@@ -68,5 +69,9 @@
     <string name="question_in_engish">The question is in English</string>
     <string name="question_in_french">The question is in French</string>
     <string name="answer_question">Go!</string>
+    <string name="next_question">OK</string>
+    <string name="exit_quiz">Done</string>
+    <string name="correct_answer_given">Correct!</string>
+    <string name="incorrect_answer_given">This answer is incorrect.</string>
 
 </resources>
