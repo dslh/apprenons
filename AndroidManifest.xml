@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="nz.co.lakehammond.apprenons"
+    package="nz.co.lake_hammond.apprenons"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="12"
@@ -12,11 +12,11 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme" android:debuggable="false">
         <activity
-            android:name="nz.co.lakehammond.apprenons.TraductionDetailActivity"
+            android:name="nz.co.lake_hammond.apprenons.TraductionDetailActivity"
             android:label="@string/app_name"
-            android:parentActivityName="nz.co.lakehammond.apprenons.TranslationsListActivity"
+            android:parentActivityName="nz.co.lake_hammond.apprenons.TranslationsListActivity"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,13 +26,13 @@
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nz.co.lakehammond.apprenons.TranslationsListActivity" />
+                android:value="nz.co.lake_hammond.apprenons.TranslationsListActivity" />
         </activity>
         <activity
-            android:name="nz.co.lakehammond.apprenons.TranslationsListActivity"
+            android:name="nz.co.lake_hammond.apprenons.TranslationsListActivity"
             android:label="@string/title_activity_translations_list" />
         <activity
-            android:name="nz.co.lakehammond.apprenons.NewQuizActivity"
+            android:name="nz.co.lake_hammond.apprenons.NewQuizActivity"
             android:label="@string/new_quiz" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,12 +41,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="nz.co.lakehammond.apprenons.QuizActivity"
+            android:name="nz.co.lake_hammond.apprenons.QuizActivity"
             android:label="@string/title_activity_quiz"
-            android:parentActivityName="nz.co.lakehammond.apprenons.NewQuizActivity" >
+            android:parentActivityName="nz.co.lake_hammond.apprenons.NewQuizActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="nz.co.lakehammond.apprenons.NewQuizActivity" />
+                android:value="nz.co.lake_hammond.apprenons.NewQuizActivity" />
         </activity>
     </application>
 
