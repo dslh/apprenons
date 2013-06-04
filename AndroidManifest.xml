@@ -8,11 +8,13 @@
         android:minSdkVersion="12"
         android:targetSdkVersion="17" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" android:debuggable="false">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="nz.co.lake_hammond.apprenons.TraductionDetailActivity"
             android:label="@string/app_name"
@@ -48,6 +50,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="nz.co.lake_hammond.apprenons.NewQuizActivity" />
         </activity>
-    </application>
 
+        <service
+            android:name="nz.co.lake_hammond.apprenons.BackupService"
+            android:exported="false" >
+        </service>
+    </application>
 </manifest>

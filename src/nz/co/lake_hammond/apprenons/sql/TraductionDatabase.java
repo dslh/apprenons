@@ -6,6 +6,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import nz.co.lake_hammond.apprenons.model.Classification;
 import nz.co.lake_hammond.apprenons.model.Traduction;
 import nz.co.lake_hammond.apprenons.model.Classification.AdjectiveDetails;
@@ -197,6 +201,27 @@ public class TraductionDatabase {
 	}
 	
 	/**
+	 * Gets a list of all the tags that apply to the
+	 * given translation. The translation must have already
+	 * been entered into the database, or no tags will be returned.
+	 * 
+	 * @param traduction the translation to retrieve tags for
+	 * @return a collection of strings that the translation has been tagged with
+	 */
+	public Collection<String> getTagsForTraduction(Traduction traduction) {
+		SQLiteDatabase db = dbHelper.getReadableDatabase();
+		Collection<String> tags = new ArrayList<String>();
+		Cursor cursor = db.query("tag", new String[] { "tag" },
+			context.getString(R.string.sql_snippet_tag_matches_phrase_id),
+			new String[] { String.valueOf(traduction.getId()) },
+			null, null, null);
+		while (cursor.moveToNext()) {
+			tags.add(cursor.getString(0));
+		}
+		return tags;
+	}
+	
+	/**
 	 * Gets a full list of translations stored in the database,
 	 * including classification info.
 	 * 
@@ -204,6 +229,24 @@ public class TraductionDatabase {
 	 */
 	public List<Traduction> getAllTraductions() {
 		return getTraductions(null, null);
+	}
+	
+	/**
+	 * Returns a JSON array containing all of the
+	 * translations in the database.
+	 * 
+	 * @return a {@link JSONArray} of translations
+	 * @throws JSONException if there is a problem creating the array
+	 */
+	public JSONArray getAllAsJson() throws JSONException {
+		List<Traduction> traductions = getAllTraductions();
+		JSONArray array = new JSONArray();
+		for (Traduction traduction : traductions) {
+			JSONObject json = traduction.toJson();
+			json.put("tags", new JSONArray(getTagsForTraduction(traduction)));
+			array.put(json);
+		}
+		return array;
 	}
 	
 	/**

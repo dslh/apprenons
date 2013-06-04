@@ -23,6 +23,8 @@ public class ShufflingQuestionQueue implements QuestionQueue {
 			OnAnsweredListener {
 		@Override
 		public void onAnswered(Answer answer) {
+			translations.remove(translations.size() - 1);
+			
 			if (answer.isCorrect())
 				translations.add((int) (
 						Math.random() * translations.size() * 0.1),

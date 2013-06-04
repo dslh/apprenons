@@ -99,4 +99,11 @@
         	 WHERE tag IN (?)
         )
     </string>
+    <string name="sql_snippet_tag_matches_phrase_id">
+        id IN (
+        	SELECT DISTINCT tag_id
+        	  FROM phrase_tag
+        	 WHERE phrase_id = ?
+        )
+    </string>
 </resources>

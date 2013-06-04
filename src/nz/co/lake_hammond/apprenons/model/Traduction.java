@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import nz.co.lake_hammond.apprenons.model.Classification.Genre;
 
 import android.text.TextUtils;
@@ -69,6 +73,24 @@ public class Traduction {
 		versionFrançaise = français;
 		this.classification = classification;
 		setVersionsAnglaise(anglaise);
+	}
+	
+	/**
+	 * Deserialize a translation from JSON.
+	 * 
+	 * @param json the translation in JSON form.
+	 * @throws JSONException if the given JSON is missing required fields.
+	 */
+	public Traduction(JSONObject json) throws JSONException {
+		versionFrançaise = json.getString("french");
+		
+		JSONArray english = json.getJSONArray("english");
+		for (int i = 0; i < english.length(); ++i)
+			versionsAnglaise.add(english.getString(i));
+		
+		if (json.has("details"))
+			classification = Classification.fromJson(
+					json.getJSONObject("details"));
 	}
 	
 	/**
@@ -208,5 +230,29 @@ public class Traduction {
 	 */
 	public void setId(long id) {
 		this.id = id;
+	}
+	
+	/**
+	 * Converts the translation into a JSON stucture for
+	 * serialization.
+	 * 
+	 * @return the translation as a {@link JSONObject}
+	 */
+	public JSONObject toJson() {
+		JSONObject json = new JSONObject();
+		try {
+			json.put("english", new JSONArray(versionsAnglaise));
+			json.put("french", versionFrançaise);
+			
+			if (classification != null)
+				json.put("details", classification.toJson());
+			
+			if (id != 0)
+				json.put("id", id);
+			
+		} catch (JSONException e) {
+			throw new Error("Failed to create JSON for translation", e);
+		}
+		return json;
 	}
 }

@@ -1,5 +1,9 @@
 package nz.co.lake_hammond.apprenons.model;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.annotation.SuppressLint;
 import nz.co.lake_hammond.apprenons.model.Classification.NounDetails.Gender;
 import nz.co.lake_hammond.apprenons.model.Classification.VerbDetails.Group;
 import nz.co.lake_hammond.apprenons.model.Classification.VerbDetails.Transitivity;
@@ -21,6 +25,57 @@ public class Classification {
 	 */
 	public Genre getGenre() {
 		return genre;
+	}
+
+	
+	// Adverbs don't have any details at the moment...
+	private static final Classification ADVERB_CLASSIFICATION =
+			new Classification(Genre.ADVERB, null);
+	
+	// Cached JSON object for adverbs since it's always the same
+	private static final JSONObject ADVERB_JSON;
+	static {
+		try {
+			ADVERB_JSON = new JSONObject("{ \"type\" : \"adverb\" }");
+		} catch (JSONException e) {
+			throw new Error("Failed to create JSON for adverb details", e);
+		}
+	}
+	
+	/**
+	 * Gets the classification of the object as
+	 * a JSON object for serialization.
+	 * 
+	 * @return the classification as a {@link JSONObject}
+	 */
+	public JSONObject toJson() {
+		if (genre == Genre.ADVERB)
+			return ADVERB_JSON;
+		else if (details != null)
+			return details.toJson();
+		else
+			return null;
+	}
+	
+	/**
+	 * Deserializes the classification details for a
+	 * translation from JSON.
+	 * 
+	 * @return a {@link Classification} object
+	 * @throws JSONException if the JSON is missing required fields
+	 */
+	public static Classification fromJson(JSONObject json) throws JSONException {
+		String type = json.getString("type");
+		if ("noun".equals(type))
+			return NounDetails.fromJson(json);
+		if ("verb".equals(type))
+			return VerbDetails.fromJson(json);
+		if ("adjective".equals(type))
+			return AdjectiveDetails.fromJson(json);
+		if ("adverb".equals(type))
+			return adverb();
+		
+		throw new JSONException("Unrecognized classification type: " + type);
 	}
 	
 	/**
@@ -63,9 +118,6 @@ public class Classification {
 				new AdjectiveDetails(feminineForm, pluralForm, femininePlural));
 	}
 	
-	// Adverbs don't have any details at the moment...
-	private static final Classification ADVERB_CLASSIFICATION =
-			new Classification(Genre.ADVERB, null);
 	/**
 	 * Get a classification denoting an adverb. Adverbs have
 	 * no specific details.
@@ -174,7 +226,15 @@ public class Classification {
 		ADVERB;
 	}
 	
-	private static class Details {}
+	private static abstract class Details {
+		/**
+		 * Returns the classification details of
+		 * the translation as JSON for serialization.
+		 * 
+		 * @return the details as a {@link JSONObject}
+		 */
+		public abstract JSONObject toJson();
+	}
 	
 	/**
 	 * Stores details for French words that are
@@ -236,6 +296,33 @@ public class Classification {
 		 */
 		public boolean isPlural() {
 			return plural;
+		}
+		
+		@SuppressLint("DefaultLocale") // no locale for backend stuff
+		public JSONObject toJson() {
+			JSONObject json = new JSONObject();
+			try {
+				json.put("type", "noun");
+				json.put("gender", gender.toString().toLowerCase());
+				json.put("proper", proper);
+				json.put("plural", plural);
+			} catch (JSONException e) {
+				throw new Error("Failed to create JSON for noun details", e);
+			}
+			return json;
+		}
+		
+		static Classification fromJson(JSONObject json) throws JSONException {
+			String genderString = json.getString("gender");
+			Gender gender;
+			if ("masculine".equals(genderString))
+				gender = Gender.MASCULINE;
+			else if ("feminine".equals(genderString))
+				gender = Gender.FEMININE;
+			else
+				throw new JSONException("Unknown noun gender: " + genderString);
+			
+			return noun(gender, json.getBoolean("proper"), json.getBoolean("plural"));
 		}
 	}
 	
@@ -312,6 +399,48 @@ public class Classification {
 		 */
 		public boolean isReflexive() {
 			return reflexive;
+		}
+
+		@SuppressLint("DefaultLocale") // no locale for backend stuff
+		public JSONObject toJson() {
+			JSONObject json = new JSONObject();
+			try {
+				json.put("type", "verb");
+				json.put("group", group.toString().toLowerCase());
+				json.put("transitivity", transitivity.toString().toLowerCase());
+				json.put("reflexive", reflexive);
+			} catch (JSONException e) {
+				throw new Error("Failed to create JSON for verb details", e);
+			}
+			return json;
+		}
+		
+		static Classification fromJson(JSONObject json) throws JSONException {
+			String groupString = json.getString("group");
+			Group group;
+			if ("first".equals(groupString))
+				group = Group.FIRST;
+			else if ("second".equals(groupString))
+				group = Group.SECOND;
+			else if ("third".equals(groupString))
+				group = Group.THIRD;
+			else if ("irregular".equals(groupString))
+				group = Group.IRREGULAR;
+			else
+				throw new JSONException("Unknown verb group: " + groupString);
+			
+			String transitivityString = json.getString("transitivity");
+			Transitivity transitivity;
+			if ("transitive".equals(transitivityString))
+				transitivity = Transitivity.TRANSITIVE;
+			else if ("intransitive".equals(transitivityString))
+				transitivity = Transitivity.INTRANSITIVE;
+			else if ("both".equals(transitivityString))
+				transitivity = Transitivity.BOTH;
+			else
+				throw new JSONException("Unknown verb transitivity: " + transitivityString);
+			
+			return verb(group, transitivity, json.getBoolean("reflexive"));
 		}
 	}
 	
@@ -391,6 +520,35 @@ public class Classification {
 		 */
 		public boolean hasFemininePluralForm() {
 			return femininePlural != null; 
+		}
+		
+		public JSONObject toJson() {
+			JSONObject json = new JSONObject();
+			try {
+				json.put("type", "adjective");
+				json.put("feminine", feminineForm);
+				json.put("plural", pluralForm);
+				json.put("feminine_plural", femininePlural);
+			} catch (JSONException e) {
+				throw new Error("Failed to create JSON for adjective details", e);
+			}
+			return json;
+		}
+		
+		static Classification fromJson(JSONObject json) throws JSONException {
+			String feminine = null;
+			if (json.has("feminine"))
+				feminine = json.getString("feminine");
+			
+			String plural = null;
+			if (json.has("plural"))
+				plural = json.getString("plural");
+			
+			String femininePlural = null;
+			if (json.has("feminine_plural"))
+				femininePlural = json.getString("feminine_plural");
+			
+			return adjective(feminine, plural, femininePlural);
 		}
 	}
 }

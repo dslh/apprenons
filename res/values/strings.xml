@@ -73,5 +73,13 @@
     <string name="exit_quiz">Done</string>
     <string name="correct_answer_given">Correct!</string>
     <string name="incorrect_answer_given">This answer is incorrect.</string>
+    
+    <!-- Backing up the database -->
+    <string name="backup_database">Back up data</string>
+    <string name="backup_failed">There was a problem creating a backup</string>
+    <string name="backup_complete">Backup saved successfully</string>
+    <string name="backup_notification_title">Backing up translations</string>
+    <string name="backup_notification_text_creating">Creating the backup&#8230;</string>
+    <string name="backup_notification_text_sending">Sending data to backup server&#8230;</string>
 
 </resources>
