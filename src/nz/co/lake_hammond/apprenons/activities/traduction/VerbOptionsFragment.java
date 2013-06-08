@@ -57,12 +57,17 @@ public class VerbOptionsFragment extends TraductionOptionsFragment {
 	public Classification getClassification() {
 		Group group = Group.IRREGULAR;
 		if (!checkIrregular().isChecked()) {
-			if (verb.endsWith("er"))
-				group = Group.FIRST;
-			else if (verb.endsWith("ir"))
-				group = Group.SECOND;
-			else if (verb.endsWith("re"))
-				group = Group.THIRD;
+			for (String word : verb.split("\\s+")) {
+				if (word.endsWith("er"))
+					group = Group.FIRST;
+				else if (word.endsWith("ir"))
+					group = Group.SECOND;
+				else if (word.endsWith("re"))
+					group = Group.THIRD;
+				else
+					continue;
+				break;
+			}
 		}
 		
 		Transitivity transitivity = null;

@@ -223,6 +223,7 @@ public class TraductionDetailActivity extends Activity {
     		optionsFragment = verbDetails;
     		watcher = new VerbWatcher(verbDetails);
     		newTranslationBox().addTextChangedListener(watcher);
+    		verbDetails.setVerb(newTranslationBox().getText().toString());
     		break;
     	case R.id.radioAdjective:
     		optionsFragment = new AdjectiveOptionsFragment();
